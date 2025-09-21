@@ -5,7 +5,7 @@ use super::vector::{
 };
 
 #[derive(Clone)]
-pub enum Axis{
+pub enum Inflect{
     X,
     Y,
     Z,
@@ -25,7 +25,7 @@ pub enum Axis{
 
 #[derive(Clone)]
 pub struct Direction{
-    axis: Axis,
+    Inflect: Inflect,
     scalar: Point,
 }
 
@@ -60,74 +60,74 @@ impl Vector for Point{
 }
 
 impl Direction{
-    pub fn new(axis: &Axis, point: &Point) -> Direction{
+    pub fn new(Inflect: &Inflect, point: &Point) -> Direction{
         Direction{
-            axis: axis.clone(),
+            Inflect: Inflect.clone(),
             scalar: point.clone(),
         }
     }
 }
 
-impl Axis{
+impl Inflect{
     pub fn get_scalar(&self, vector: &BoxedVector) -> (Numeric, Numeric, Numeric){
         match self{
-            Axis::X => {
+            Inflect::X => {
                 let x = vector.get_x();
                 (x, 0.0, 0.0)
             },
-            Axis::Y => {
+            Inflect::Y => {
                 let y = vector.get_y();
                 (y, 0.0, 0.0)
             },
-            Axis::Z => {
+            Inflect::Z => {
                 let z = vector.get_z();
                 (z, 0.0, 0.0)
             },
-            Axis::XY => {
+            Inflect::XY => {
                 let (x, y) = vector.get_xy();
                 (x, y, 0.0)
             },
-            Axis::XZ => {
+            Inflect::XZ => {
                 let (x, z) = vector.get_xz();
                 (x, z, 0.0)
             },
-            Axis::YX => {
+            Inflect::YX => {
                 let (y, x) = vector.get_yx();
                 (y, x, 0.0)
             },
-            Axis::YZ => {
+            Inflect::YZ => {
                 let (y, z) = vector.get_yz();
                 (y, z, 0.0)
             }
-            Axis::ZX => {
+            Inflect::ZX => {
                 let (z, x) = vector.get_zx();
                 (z, x, 0.0)
             },
-            Axis::ZY => {
+            Inflect::ZY => {
                 let (z, y) = vector.get_yz();
                 (z, y, 0.0)
             },
-            Axis::XYZ => {
+            Inflect::XYZ => {
                 let (x, y, z) = vector.get_dimension();
                 (x, y, z)
             },
-            Axis::XZY => {
+            Inflect::XZY => {
                 let (x, y, z) = vector.get_dimension();
                 (x, z, y)
             }
-            Axis::YXZ => {
+            Inflect::YXZ => {
                 let (x, y, z) = vector.get_dimension();
                 (y, x, z)
             },
-            Axis::ZXY => {
+            Inflect::ZXY => {
                 let (x, y, z) = vector.get_dimension();
                 (z, x, y)
             },
-            Axis::YZX => {
+            Inflect::YZX => {
                 let (x, y, z) = vector.get_dimension();
                 (y, z, x)
             }
-            Axis::ZYX => {
+            Inflect::ZYX => {
                 let (x, y, z) = vector.get_dimension();
                 (z, y, x)
             }
