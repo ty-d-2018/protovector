@@ -3,6 +3,7 @@ pub type BoxedVector = Box::<DynVector>;
 pub type Numeric = f32;
 
 pub trait Vector{
+    fn create(&self, x: Numeric, y: Numeric, z: Numeric) -> BoxedVector;
     fn get_dimension(&self) -> (Numeric, Numeric, Numeric);
     fn get_clone(&self) -> BoxedVector;
     fn get_x(&self) -> Numeric{
