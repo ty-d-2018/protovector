@@ -3,7 +3,7 @@ use super::vector::{
     BoxedVector,
     Numeric,
 };
-use super::linear::Sort::{ Inflect };
+use super::linear::sort::{ Inflect };
 
 #[derive(Clone)]
 pub struct Direction{

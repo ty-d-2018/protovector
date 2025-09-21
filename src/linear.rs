@@ -1,30 +1,76 @@
 
 pub mod mesh{
-    use super::super::vector::{ Vector, BoxedVector, Numeric };
+    use super::super::vector::{ 
+        Vector, 
+        BoxedVector, 
+        Numeric 
+    };
+    use super::super::arrow::{
+        Point, 
+        Direction,
+    };
+    use super::sort::{ Inflect };
+    use super::{ Operation };
+
+    pub struct OpStage{
+        pub lx: Numeric,
+        pub ly: Numeric,
+        pub lz: Numeric,
+        pub ry: Numeric,
+        pub rx: Numeric,
+        pub rz: Numeric,
+    }
+
+    impl OpStage{
+        pub fn new(x1: Numeric, y1: Numeric, z1: Numeric, x2: Numeric, y2: Numeric, z2: Numeric) -> OpStage{
+            OpStage{
+                lx: x1,
+                ly: y1,
+                lz: z1,
+                rx: x2,
+                ry: y2,
+                rz: z2,
+            }
+        }
+        pub fn get_nested(&self) -> ((Numeric, Numeric, Numeric), (Numeric, Numeric, Numeric)){
+            ((self.lx, self.ly, self.lz), (self.rx, self.ry, self.rz))
+        }
+    }
+
     pub trait SimpleMesh: Vector{
-        fn product(left: &BoxedVector, right: &BoxedVector) -> (Numeric, Numeric, Numeric){
-            let (left_x, left_y, left_z) = left.get_dimension();
-            let (right_x, right_y, right_z) = right.get_dimension();
+        fn product(&self, stage: &OpStage) -> (Numeric, Numeric, Numeric){
+            let ((lx, ly, lz), (rx, ry, rz)) = stage.get_nested();
 
-            (left_x * right_x, left_y * right_y, left_z * right_z)
+            (lx * rx, ly * ry, lz * rz)
         }
-        fn add(left: &BoxedVector, right: &BoxedVector) -> (Numeric, Numeric, Numeric){
-            let (left_x, left_y, left_z) = left.get_dimension();
-            let (right_x, right_y, right_z) = right.get_dimension();
+        fn add(&self, stage: &OpStage) -> (Numeric, Numeric, Numeric){
+            let ((lx, ly, lz), (rx, ry, rz)) = stage.get_nested();
 
-            (left_x + right_x, left_y + right_y, left_z + right_z)
+            (lx + rx, ly + ry, lz + rz)
         }
-        fn divide(left: &BoxedVector, right: &BoxedVector) -> (Numeric, Numeric, Numeric){
-            let (left_x, left_y, left_z) = left.get_dimension();
-            let (right_x, right_y, right_z) = right.get_dimension();
+        fn divide(&self, stage: &OpStage) -> (Numeric, Numeric, Numeric){
+            let ((lx, ly, lz), (rx, ry, rz)) = stage.get_nested();
 
-            (left_x / right_x, left_y / right_y, left_z / right_z)
+            (lx / rx, ly / ry, lz / rz)
         }
-        fn subtract(left: &BoxedVector, right: &BoxedVector) -> (Numeric, Numeric, Numeric){
-            let (left_x, left_y, left_z) = left.get_dimension();
-            let (right_x, right_y, right_z) = right.get_dimension();
+        fn subtract(&self, stage: &OpStage) -> (Numeric, Numeric, Numeric){
+            let ((lx, ly, lz), (rx, ry, rz)) = stage.get_nested();
 
-            (left_x - right_x, left_y - right_y, left_z - right_z)
+            (lx - rx, ly - ry, lz - rz)
+        }
+        fn simple_mesh(&self, inflect: &Inflect, left: &BoxedVector, right: &BoxedVector, operation: &Operation) -> BoxedVector{
+            let (x1, y1, z1) = inflect.get_scalar(left);
+            let (x2, y2, z2) = inflect.get_scalar(right);
+            let stage = OpStage::new(x1, y1, z1, x2, y2, z2);
+            let (xx, yy, zz) = match operation{
+                Operation::Multiply => self.product(&stage),
+                Operation::Add => self.add(&stage),
+                Operation::Subtract => self.subtract(&stage),
+                Operation::Divide => self.divide(&stage),
+            };
+            let vector: BoxedVector = left.create(xx, yy, zz);
+
+            vector
         }
     }
 }
@@ -36,7 +82,7 @@ pub enum Operation{
     Divide,
 }
 
-pub mod Sort{
+pub mod sort{
     use super::super::vector::{ Vector, BoxedVector, Numeric };
 
     #[derive(Clone)]
