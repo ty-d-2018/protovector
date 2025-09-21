@@ -7,8 +7,8 @@ use super::linear::Sort::{ Inflect };
 
 #[derive(Clone)]
 pub struct Direction{
-    Inflect: Inflect,
-    scalar: Point,
+    axis: Inflect,
+    point: Point,
 }
 
 #[derive(Clone)]
@@ -42,10 +42,27 @@ impl Vector for Point{
 }
 
 impl Direction{
-    pub fn new(Inflect: &Inflect, point: &Point) -> Direction{
+    pub fn new(axis: &Inflect, point: &Point) -> Direction{
         Direction{
-            Inflect: Inflect.clone(),
-            scalar: point.clone(),
+            axis: axis.clone(),
+            point: point.clone(),
         }
+    }
+}
+
+impl Vector for Direction{
+    fn create(&self, x: Numeric, y: Numeric, z: Numeric) -> BoxedVector{
+        let point: Point = Point::new(x, y, z);
+        let direction: Direction = Direction::new(&Inflect::XYZ, &point);
+
+        Box::new(direction)
+    }
+    fn get_dimension(&self) -> (Numeric, Numeric, Numeric){
+        let scalar: (Numeric, Numeric, Numeric) = self.axis.get_scalar(&self.point.get_clone());
+
+        scalar
+    }
+    fn get_clone(&self) -> BoxedVector{
+        Box::new(self.clone())
     }
 }
