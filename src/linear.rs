@@ -28,3 +28,10 @@ pub mod mesh{
         }
     }
 }
+
+pub enum Operation{
+    Multiply,
+    Add,
+    Subtract,
+    Divide,
+}
