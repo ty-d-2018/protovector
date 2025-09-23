@@ -107,6 +107,11 @@ pub mod basic{
             vector
         }
     }
+    pub trait ScalarMix: Vector{
+        fn s_product(&self, stage: &OpStage, pos: char, right_side: bool) -> (Numeric, Numeric, Numeric){
+            todo!();
+        }
+    }
 }
 
 pub enum Operation{
