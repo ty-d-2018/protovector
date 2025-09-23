@@ -244,5 +244,16 @@ pub mod sort{
 
             (x / x2, y / y2, z / z2)
         }
+        pub fn get_2d(one: char, two: char) -> Option::<Inflect>{
+            match (one, two){
+                ('x', 'y') => Some(Inflect::XY),
+                ('x', 'z') => Some(Inflect::XZ),
+                ('y', 'x') => Some(Inflect::YX),
+                ('y', 'z') => Some(Inflect::YZ),
+                ('z', 'x') => Some(Inflect::ZX),
+                ('z', 'y') => Some(Inflect::ZY),
+                _ => None,
+            }
+        }
     }
 }
