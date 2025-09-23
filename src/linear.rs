@@ -216,8 +216,6 @@ pub mod sort{
                 Inflect::X | Inflect::Y | Inflect::Z => self.get_scalar(l_vector),
                 _ => {return Err(VectorError::Coordinate);}
             };
-            
-            self.get_scalar(l_vector);
             let (x, y, z) = r_inflect.get_scalar(r_vector);
 
             Ok((scalar * x, scalar * y, scalar * z))
