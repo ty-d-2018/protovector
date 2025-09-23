@@ -13,12 +13,12 @@ pub mod basic{
     use super::{ Operation };
 
     pub struct OpStage{
-        pub lx: Numeric,
-        pub ly: Numeric,
-        pub lz: Numeric,
-        pub ry: Numeric,
-        pub rx: Numeric,
-        pub rz: Numeric,
+        lx: Numeric,
+        ly: Numeric,
+        lz: Numeric,
+        ry: Numeric,
+        rx: Numeric,
+        rz: Numeric,
     }
 
     impl OpStage{
