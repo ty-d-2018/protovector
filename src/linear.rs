@@ -234,5 +234,17 @@ pub mod sort{
 
             (x + x2, y + y2, z + z2)
         }
+        pub fn subtract(&self, r_inflect: &Inflect, r_vector: &BoxedVector, l_vector: &BoxedVector) -> VScalar{
+            let (x, y, z) = self.get_scalar(l_vector);
+            let (x2, y2, z2) = r_inflect.get_scalar(r_vector);
+
+            (x - x2, y - y2, z - z2)
+        }
+        pub fn divide(&self, r_inflect: &Inflect, r_vector: &BoxedVector, l_vector: &BoxedVector) -> VScalar{
+            let (x, y, z) = self.get_scalar(l_vector);
+            let (x2, y2, z2) = r_inflect.get_scalar(r_vector);
+
+            (x / x2, y / y2, z / z2)
+        }
     }
 }
