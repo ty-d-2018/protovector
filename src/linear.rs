@@ -123,6 +123,7 @@ pub enum Operation{
 
 pub mod sort{
     use super::super::vector::{ Vector, BoxedVector, Numeric };
+    use super::super::error::{ VectorError };
 
     #[derive(Clone)]
     pub enum Inflect{
@@ -207,6 +208,17 @@ pub mod sort{
                     (z, y, x)
                 }
             }
+        }
+        pub fn scalar_product(&self, r_inflect: &Inflect, r_vector: &BoxedVector, l_vector: &BoxedVector) -> Result::<(Numeric, Numeric, Numeric), VectorError>{
+            let (scalar, _, _) = match self{
+                Inflect::X | Inflect::Y | Inflect::Z => self.get_scalar(l_vector),
+                _ => {return Err(VectorError::Coordinate);}
+            };
+            
+            self.get_scalar(l_vector);
+            let (x, y, z) = r_inflect.get_scalar(r_vector);
+
+            Ok((scalar * x, scalar * y, scalar * z))
         }
     }
 }
