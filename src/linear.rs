@@ -1,5 +1,5 @@
 
-pub mod mesh{
+pub mod basic{
     use super::super::vector::{ 
         Vector, 
         BoxedVector, 
@@ -35,9 +35,43 @@ pub mod mesh{
         pub fn get_nested(&self) -> ((Numeric, Numeric, Numeric), (Numeric, Numeric, Numeric)){
             ((self.lx, self.ly, self.lz), (self.rx, self.ry, self.rz))
         }
+        pub fn get_half(&self, is_right: bool) -> (Numeric, Numeric, Numeric){
+            if is_right{
+                (self.rx, self.ry, self.rz)
+            }else{
+                (self.lx, self.ly, self.lz)
+            }
+        }
+        pub fn third_half(&self, pos: char, is_right: bool) -> Option::<(Numeric, (Numeric, Numeric, Numeric))>{
+            match (pos, is_right){
+                ('x', true) => Some((self.lx, (self.rx, self.ry, self.rz))),
+                ('x', false) => Some((self.rx, (self.lx, self.ly, self.lz))),
+                ('y', true) => Some((self.ly, (self.rx, self.ry, self.rz))),
+                ('y', false) => Some((self.ry, (self.lx, self.ly, self.lz))),
+                ('z', true) => Some((self.lz, (self.rx, self.ry, self.rz))),
+                ('z', false) => Some((self.rz, (self.lx, self.ly, self.lz))),
+                _ => None,
+            }
+        }
+        pub fn two_thirds(&self, pos_left: char, pos_right: char) -> Option::<(Numeric, Numeric)>{
+            let l_numerial = match pos_left{
+                'x' => self.lx,
+                'y' => self.ly,
+                'z' => self.lz,
+                _ => {return None;},
+            };
+            let r_numerial = match pos_right{
+                'x' => self.rx,
+                'y' => self.ry,
+                'z' => self.rz,
+                _ => {return None;},
+            };
+
+            Some((l_numerial, r_numerial))
+        }
     }
 
-    pub trait SimpleMesh: Vector{
+    pub trait MeshMix: Vector{
         fn product(&self, stage: &OpStage) -> (Numeric, Numeric, Numeric){
             let ((lx, ly, lz), (rx, ry, rz)) = stage.get_nested();
 
