@@ -4,6 +4,7 @@ pub mod sort{
     use super::super::error::{ VectorError };
 
     pub type VScalar = (Numeric, Numeric, Numeric);
+    pub type RNumerial = (u32, u32, u32);
 
     #[derive(Clone)]
     pub enum Inflect{
@@ -133,5 +134,29 @@ pub mod sort{
                 _ => None,
             }
         }
+    }
+    
+    #[derive(Clone)]
+    pub enum Reflect{
+        MX(RNumerial),
+        MY(RNumerial),
+        MZ(RNumerial),
+        PX(RNumerial),
+        PY(RNumerial),
+        PZ(RNumerial),
+        MXMY(RNumerial),
+        PXPY(RNumerial),
+        PXMY(RNumerial),
+        MXPY(RNumerial),
+        PXPZ(RNumerial),
+        MXMZ(RNumerial),
+        PXMZ(RNumerial),
+        MXPZ(RNumerial),
+        PYPZ(RNumerial),
+        MYMZ(RNumerial),
+        PYMZ(RNumerial),
+        MYPZ(RNumerial),
+        PXPYPZ(RNumerial),
+        MXMYMZ(RNumerial),
     }
 }
