@@ -1,9 +1,6 @@
-use super::vector::{
-    Vector, 
-    BoxedVector,
-    Numeric,
-};
+use super::vector::{ Vector };
 use super::linear::sort::{ Inflect };
+use super::vtypes::{ BoxedVector, Numeric };
 
 #[derive(Clone)]
 pub struct Direction{

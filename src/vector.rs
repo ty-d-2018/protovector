@@ -1,6 +1,4 @@
-pub type DynVector = dyn Vector;
-pub type BoxedVector = Box::<DynVector>;
-pub type Numeric = f32;
+use super::vtypes::{ BoxedVector, Numeric };
 
 pub trait Vector{
     fn create(&self, x: Numeric, y: Numeric, z: Numeric) -> BoxedVector;

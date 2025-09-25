@@ -1,10 +1,10 @@
 
 pub mod sort{
-    use super::super::vector::{ Vector, BoxedVector, Numeric };
+    use super::super::vector::{ Vector };
     use super::super::error::{ VectorError };
+    use super::super::vtypes::{ BoxedVector, Numeric, VScalar, RNumerial };
 
-    pub type VScalar = (Numeric, Numeric, Numeric);
-    pub type RNumerial = (u32, u32, u32);
+    
 
     #[derive(Clone)]
     pub enum Inflect{
