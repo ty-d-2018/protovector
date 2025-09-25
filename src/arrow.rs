@@ -2,13 +2,13 @@ use super::vector::{ Vector };
 use super::linear::sort::{ Inflect };
 use super::vtypes::{ BoxedVector, Numeric };
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Direction{
     axis: Inflect,
     point: Point,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Point{
     x: Numeric,
     y: Numeric,

@@ -6,7 +6,7 @@ pub mod sort{
 
     
 
-    #[derive(Clone)]
+    #[derive(Clone, Debug)]
     pub enum Inflect{
         X,
         Y,
@@ -136,7 +136,7 @@ pub mod sort{
         }
     }
     
-    #[derive(Clone)]
+    #[derive(Clone, Debug)]
     pub enum Reflect{
         MX(RNumerial),
         MY(RNumerial),
